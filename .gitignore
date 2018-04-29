@@ -24,6 +24,7 @@ composer.phar
 # Mac DS_Store Files
 .DS_Store
 
+_protected/runtime
 
 # phpunit itself is not needed
 phpunit.phar
