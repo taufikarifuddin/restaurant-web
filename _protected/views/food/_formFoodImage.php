@@ -18,11 +18,12 @@ echo TabularForm::widget([
     'checkboxColumn' => false,
     'actionColumn' => false,
     'attributeDefaults' => [
-        'type' => TabularForm::INPUT_TEXT,
+        'type' => TabularForm::INPUT_FILE,
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden'=>true]],
         'img' => ['type' => TabularForm::INPUT_TEXT],
+//        'imageFile' => ['type' => TabularForm::INPUT_FILE],
         'del' => [
             'type' => 'raw',
             'label' => '',

@@ -48,8 +48,6 @@ class Food extends \yii\db\ActiveRecord
             [['price', 'category'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
 
@@ -61,16 +59,7 @@ class Food extends \yii\db\ActiveRecord
         return 'food';
     }
 
-    /**
-     *
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
+    
 
     /**
      * @inheritdoc
@@ -83,7 +72,7 @@ class Food extends \yii\db\ActiveRecord
             'detail' => 'Detail',
             'price' => 'Price',
             'category' => 'Category',
-            'status' => 'Status',
+            'status' => 'Status Ketersediaan',
         ];
     }
     

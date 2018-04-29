@@ -19,9 +19,7 @@ class FoodImage extends BaseFoodImage
 	    [
             [['food_id', 'img'], 'required'],
             [['food_id'], 'integer'],
-            [['img'], 'string', 'max' => 255],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+            [['img'], 'string', 'max' => 255]
         ]);
     }
 	

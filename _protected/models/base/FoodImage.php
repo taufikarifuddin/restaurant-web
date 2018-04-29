@@ -18,6 +18,7 @@ class FoodImage extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
+    public $imageFile;
 
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
@@ -39,8 +40,7 @@ class FoodImage extends \yii\db\ActiveRecord
             [['food_id', 'img'], 'required'],
             [['food_id'], 'integer'],
             [['img'], 'string', 'max' => 255],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+//            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
         ];
     }
 
@@ -52,16 +52,6 @@ class FoodImage extends \yii\db\ActiveRecord
         return 'food_image';
     }
 
-    /**
-     *
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
 
     /**
      * @inheritdoc
@@ -105,5 +95,15 @@ class FoodImage extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\FoodImageQuery(get_called_class());
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

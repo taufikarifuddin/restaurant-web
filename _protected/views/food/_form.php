@@ -15,21 +15,11 @@ use yii\widgets\ActiveForm;
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'OrderItem', 
-        'relID' => 'order-item', 
-        'value' => \yii\helpers\Json::encode($model->orderItems),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
 ?>
 
 <div class="food-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->errorSummary($model); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
@@ -56,13 +46,7 @@ use yii\widgets\ActiveForm;
             'content' => $this->render('_formFoodImage', [
                 'row' => \yii\helpers\ArrayHelper::toArray($model->foodImages),
             ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('OrderItem'),
-            'content' => $this->render('_formOrderItem', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->orderItems),
-            ]),
-        ],
+        ]
     ];
     echo kartik\tabs\TabsX::widget([
         'items' => $forms,
@@ -76,8 +60,8 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-flat btn-sm btn-success' : 'btn btn-flat btn-sm btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-flat btn-sm  btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

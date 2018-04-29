@@ -22,8 +22,6 @@ class Food extends BaseFood
             [['price', 'category'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
 	
