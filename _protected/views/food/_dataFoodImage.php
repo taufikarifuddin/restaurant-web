@@ -9,9 +9,16 @@ use yii\data\ArrayDataProvider;
     $gridColumns = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
-        'img',
+        [
+            'attribute' => 'img',
+            'format' => 'raw',
+            'value' => function($model){
+                return "<img src='".Yii::getAlias('@uploads-request/'.$model->img)."' width=100 height=100 alt='food image' />";
+            }
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
+            'template' => '{delete}',
             'controller' => 'food-image'
         ],
     ];
