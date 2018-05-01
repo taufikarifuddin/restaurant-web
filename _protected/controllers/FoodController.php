@@ -8,6 +8,7 @@ use app\models\FoodSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\FoodImage;
 
 /**
  * FoodController implements the CRUD actions for Food model.
@@ -48,6 +49,7 @@ class FoodController extends Controller
      */
     public function actionView($id)
     {
+        $modelForm = new \app\models\UploadForm();
         $model = $this->findModel($id);
         $providerFoodImage = new \yii\data\ArrayDataProvider([
             'allModels' => $model->foodImages,
@@ -55,7 +57,21 @@ class FoodController extends Controller
         $providerOrderItem = new \yii\data\ArrayDataProvider([
             'allModels' => $model->orderItems,
         ]);
+
+        if( $modelForm->load(Yii::$app->request->post()) && 
+                Yii::$app->request->post() ){            
+            $modelForm->imageFile = \yii\web\UploadedFile::getInstance($modelForm, 'imageFile');
+            $name = $modelForm->upload();
+            if ( $name ) {
+                $obj = new FoodImage();
+                $obj->food_id = $modelForm->foodId;
+                $obj->img = $name;
+                $obj->save();
+            }
+        }
+
         return $this->render('view', [
+            'modelForm' => $modelForm,
             'model' => $this->findModel($id),
             'providerFoodImage' => $providerFoodImage,
             'providerOrderItem' => $providerOrderItem,
@@ -151,14 +167,6 @@ class FoodController extends Controller
         return $pdf->render();
     }
 
-    
-    /**
-     * Finds the Food model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Food the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Food::findOne($id)) !== null) {
@@ -168,14 +176,6 @@ class FoodController extends Controller
         }
     }
     
-    /**
-    * Action to load a tabular form grid
-    * for FoodImage
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
     public function actionAddFoodImage()
     {
         if (Yii::$app->request->isAjax) {
@@ -183,26 +183,6 @@ class FoodController extends Controller
             if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formFoodImage', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for OrderItem
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddOrderItem()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('OrderItem');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formOrderItem', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

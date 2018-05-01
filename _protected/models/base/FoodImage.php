@@ -18,8 +18,6 @@ class FoodImage extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
-    public $imageFile;
-
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
     * @return array relation names of this model
@@ -39,8 +37,7 @@ class FoodImage extends \yii\db\ActiveRecord
         return [
             [['food_id', 'img'], 'required'],
             [['food_id'], 'integer'],
-            [['img'], 'string', 'max' => 255],
-//            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
+            [['img'], 'string', 'max' => 255]
         ];
     }
 
@@ -106,4 +103,5 @@ class FoodImage extends \yii\db\ActiveRecord
             return false;
         }
     }
+
 }

@@ -123,4 +123,8 @@ class Food extends \yii\db\ActiveRecord
     {
         return new \app\models\FoodQuery(get_called_class());
     }
+
+    public static function isAvailabe(){
+        return $this->status == 1;
+    }
 }

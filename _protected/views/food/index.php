@@ -61,7 +61,19 @@ $this->registerJs($search);
                 ],
                 'filterInputOptions' => ['placeholder' => 'Food category', 'id' => 'grid-food-search-category']
             ],
-        'status',
+            [
+                'attribute' => 'status',
+                'label' => 'Status',
+                'value' => function($model){
+                    return \app\models\FoodStatus::getName($model->status);
+                },
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\FoodStatus::getList(), 'id', 'name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Status', 'id' => 'grid-food-search-status']
+            ],
         [
             'class' => 'yii\grid\ActionColumn',
         ],

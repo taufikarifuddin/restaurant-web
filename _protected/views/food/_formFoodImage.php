@@ -23,7 +23,7 @@ echo TabularForm::widget([
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden'=>true]],
         'img' => ['type' => TabularForm::INPUT_TEXT],
-//        'imageFile' => ['type' => TabularForm::INPUT_FILE],
+        'imageFile' => ['type' => TabularForm::INPUT_FILE],
         'del' => [
             'type' => 'raw',
             'label' => '',

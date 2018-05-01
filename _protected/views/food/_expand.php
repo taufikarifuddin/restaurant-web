@@ -10,17 +10,10 @@ $items = [
         ]),
     ],
             [
-        'label' => '<i class="glyphicon glyphicon-book"></i> '. Html::encode('Food Image'),
+        'label' => '<i class="glyphicon glyphicon-book"></i> '. Html::encode('Image'),
         'content' => $this->render('_dataFoodImage', [
             'model' => $model,
             'row' => $model->foodImages,
-        ]),
-    ],
-            [
-        'label' => '<i class="glyphicon glyphicon-book"></i> '. Html::encode('Order Item'),
-        'content' => $this->render('_dataOrderItem', [
-            'model' => $model,
-            'row' => $model->orderItems,
         ]),
     ],
     ];

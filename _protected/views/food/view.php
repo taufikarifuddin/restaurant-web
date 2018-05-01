@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Food */
@@ -60,20 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
 ?>
     </div>
-    <div class="row">
-        <h4>FoodCategory<?= ' '. Html::encode($this->title) ?></h4>
-    </div>
-    <?php 
-    $gridColumnFoodCategory = [
-        ['attribute' => 'id', 'visible' => false],
-        'name',
-        'is_food',
-    ];
-    echo DetailView::widget([
-        'model' => $model->category0,
-        'attributes' => $gridColumnFoodCategory    ]);
-    ?>
-    
+   
     <div class="row">
 <?php
 if($providerFoodImage->totalCount){
@@ -97,6 +85,22 @@ if($providerFoodImage->totalCount){
 
     </div>
     
+    <div class="food-image-form">
+
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
+        <?= $form->field($modelForm,'foodId')->hiddenInput(['value' => $model->id])->label(false) ?>
+        <?= $form->field($modelForm,'imageFile')->fileInput(['accept' => 'image/*','placeholder' => 'Img']) ?>
+
+
+        <div class="form-group">
+            <?= Html::submitButton('Add', ['class' => 'btn btn-sm btn-flat btn-success']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+
+    </div>
+
     <div class="row">
 <?php
 if($providerOrderItem->totalCount){
