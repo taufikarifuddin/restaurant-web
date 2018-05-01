@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\FoodCategory;
-use app\models\FoodCategorySearch;
+use app\models\OrderItem;
+use app\models\OrderItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FoodCategoryController implements the CRUD actions for FoodCategory model.
+ * OrderItemController implements the CRUD actions for OrderItem model.
  */
-class FoodCategoryController extends Controller
+class OrderItemController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class FoodCategoryController extends Controller
     }
 
     /**
-     * Lists all FoodCategory models.
+     * Lists all OrderItem models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new FoodCategorySearch();
+        $searchModel = new OrderItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,30 +42,26 @@ class FoodCategoryController extends Controller
     }
 
     /**
-     * Displays a single FoodCategory model.
+     * Displays a single OrderItem model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerFood = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->foods,
-        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerFood' => $providerFood,
         ]);
     }
 
     /**
-     * Creates a new FoodCategory model.
+     * Creates a new OrderItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new FoodCategory();
+        $model = new OrderItem();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -77,7 +73,7 @@ class FoodCategoryController extends Controller
     }
 
     /**
-     * Updates an existing FoodCategory model.
+     * Updates an existing OrderItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +92,7 @@ class FoodCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing FoodCategory model.
+     * Deletes an existing OrderItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,19 +106,15 @@ class FoodCategoryController extends Controller
     
     /**
      * 
-     * Export FoodCategory information into PDF format.
+     * Export OrderItem information into PDF format.
      * @param integer $id
      * @return mixed
      */
     public function actionPdf($id) {
         $model = $this->findModel($id);
-        $providerFood = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->foods,
-        ]);
 
         $content = $this->renderAjax('_pdf', [
             'model' => $model,
-            'providerFood' => $providerFood,
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
@@ -145,36 +137,16 @@ class FoodCategoryController extends Controller
 
     
     /**
-     * Finds the FoodCategory model based on its primary key value.
+     * Finds the OrderItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return FoodCategory the loaded model
+     * @return OrderItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = FoodCategory::findOne($id)) !== null) {
+        if (($model = OrderItem::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Food
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddFood()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Food');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formFood', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
