@@ -42,7 +42,7 @@ class OrderItem extends \yii\db\ActiveRecord
     {
         return [
             [['food_id', 'qty', 'order_id'], 'integer'],
-            [['qty', 'note', 'order_id'], 'required'],
+            [['qty', 'order_id'], 'required'],
             [['note'], 'string'],
             [['approved'], 'string', 'max' => 1],
             [['lock'], 'default', 'value' => '0'],

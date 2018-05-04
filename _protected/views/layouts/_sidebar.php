@@ -55,12 +55,12 @@ $menuItems[] = [
     'items' => $developerMenuItems,
 ];
 $menuItems[] = [
-    'url' => ['/test/koki'],
+    'url' => ['/operation/chef'],
     'icon' => 'user',
     'label' => 'Koki',
 ];
 $menuItems[] = [
-    'url' => ['/test/kasir'],
+    'url' => ['/operation/cashier'],
     'icon' => 'money',
     'label' => 'Kasir',
 ];

@@ -19,7 +19,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Ionicons -->
-    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/> -->
     <!-- Theme style -->
     <?php $this->head() ?>
 
