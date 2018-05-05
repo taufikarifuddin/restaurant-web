@@ -23,11 +23,14 @@ class AppAsset extends AssetBundle
 
     public $css = [
         'css/bootstrap.min.css',
-//        'css/style.css',
+        'css/noty.css',
+        'css/themes/mint.css',
+        'css/style.css',
     ];
 
     public $js = [
         'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js',
+        'js/noty.min.js',
         'js/user.js'
     ];
 
