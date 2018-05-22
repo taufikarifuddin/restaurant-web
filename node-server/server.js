@@ -26,7 +26,7 @@ io.on('connection', function(socket){
     });
     
     socket.on(SUBMIT_TO_CHEF, function(data) { 
-
+      io.emit(SUBMIT_TO_CHEF,data);
     });
 
     socket.on(NOTIFY_PROGRESS,function(data){
