@@ -42,12 +42,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'total_price'], 'integer'],
+            [['user_id', 'total_price','step'], 'integer'],
             [['order_time'], 'safe'],
-            [['is_payed'], 'string', 'max' => 1],
-            [['step'], 'string', 'max' => 4],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+            [['is_payed'], 'boolean'],
         ];
     }
 
@@ -58,18 +55,6 @@ class Order extends \yii\db\ActiveRecord
     {
         return 'order';
     }
-
-    /**
-     *
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
-
     /**
      * @inheritdoc
      */

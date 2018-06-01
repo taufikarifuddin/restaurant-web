@@ -29,9 +29,9 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
-        'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js',
         'js/noty.min.js',
-        'js/user.js'
+//        'js/user.js',
+        'js/socket.io.js'
     ];
 
     public $depends = [

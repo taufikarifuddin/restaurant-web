@@ -1,4 +1,6 @@
 <?php
+    use yii\helpers\Url;
+
     $this->title = "Kasir";
 ?>
 
@@ -15,13 +17,13 @@
         </thead>
         <tbody>
             <?php foreach( $orders as $k => $v ): ?>
-            <tr>
+            <tr id="container-<?= $v->id ?>">
                 <td> ORD-<?= $v->id ?> </td>    
                 <td> <?= $v->user->username ?> </td>    
                 <td> <?= $v->table_number ?> </td>    
                 <td>
                     <table class="table" id="table-<?=$v->id?>">
-                        <tr>
+                        <tr >
                             <td style="width:15%;"> Food Name </td>
                             <td style="width:5%;"> Qty </td>
                             <td style="width:80%;"> Approved </td>                                
@@ -32,7 +34,7 @@
                             <td> <?= $val->qty ?> </td>
                             <td> 
                                 <div class="form-group">
-                                    <input type="checkbox" checked=false id="checkbox-<?=$val->id?>" 
+                                    <input type="checkbox" checked="checked"  id="checkbox-<?=$val->id?>" 
                                     data-parent="<?= $v->id  ?>"
                                     data-id="<?=$val->id?>" class="checkbox-<?=$v->id?> checkbox" id="item-<?= $val->id ?>" />
                                 </div>
@@ -46,7 +48,7 @@
                     </table>
                 </td>                
                 <td>
-                    <button id="btn-approve-<?=$v->id?>"  data-id="<?=$v->id?>" disabled class="btn-approve btn btn-success btn-flat btn-xs round">
+                    <button id="btn-approve-<?=$v->id?>"  data-id="<?=$v->id?>" class="btn-approve btn btn-success btn-flat btn-xs round">
                         <i class="fa fa-check"></i>
                     </button>
                     <button id="btn-reject-<?=$v->id?>" data-id="<?=$v->id?>" disabled class="btn-reject btn btn-danger btn-flat btn-xs">
@@ -62,106 +64,8 @@
 
 <?php
 
-
-$js = '
-
-    function checkIsApproved(parentId){
-        var listOfCheckbox = $(".checkbox-"+parentId);
-        var isApproved = true;
-        $.each(listOfCheckbox,function(index,elem){
-            var isChecked = $(this).prop("checked");
-            if( !isChecked ){
-                isApproved = false;                
-                return;
-            }
-        })
-        return isApproved;
-    }
-
-    function setActionBtn(id,parentId){
-        var isValid = checkIsApproved(parentId);
-        var button = getBtnDOM(parentId);
-
-        button.approve.attr("disabled","true");
-        button.reject.attr("disabled","true");
-        
-        if( isValid ){
-            button.approve.removeAttr("disabled");
-        }else{
-            button.reject.removeAttr("disabled");                        
-        }
-    }
-
-    function getBtnDOM(parentId){
-        var approveBtn = $("#btn-approve-"+parentId);        
-        var rejectBtn = $("#btn-reject-"+parentId);                
-        return {
-            approve : approveBtn,
-            reject : rejectBtn
-        }
-    }
-
-    function collectData(parentId){
-        var listCheckbox = $("#table-"+parentId+" input[type=\"checkbox\"]");
-        var value = [];
-        $.each(listCheckbox,function(index,data){
-            var id = $(this).data("id");
-            var isApproved = $(this).prop("checked");
-            var note = $("#textarea-"+id).val();
-            if( !isApproved && note.trim() == "" ) {
-                value = false;
-                return;
-            }
-            value.push({
-                approved : isApproved,
-                note : note
-            });
-        })
-
-        return value;
-    }        
-
-    function sendDataToServer(url,data,method,fn){
-        $.ajax({
-            url : url,
-            data : data,
-            method : method,
-            success : fn
-        });
-    }
-
-    $(function(){
-
-        $(document).on("change",".checkbox",function(){
-            var isSelected = $(this).prop("checked");        
-            var id = $(this).data("id");
-            var parentId = $(this).data("parent");        
-            if(!isSelected){               
-                $("#textarea-"+id).removeAttr("style");
-            }else{
-                $("#textarea-"+id).css("display","none");        
-            }
-    
-            setActionBtn(id,parentId);
-    
-        });
-
-    
-        $(document).on("click",".btn-approve",function(){
-            var id = $(this).data("id");
-            var data = collectData(id);
-
-        })
-    
-        $(document).on("click",".btn-reject",function(){
-            var id = $(this).data("id");   
-            var data = collectData(id);
-            if(!data){
-                alert("Note harus diisi ketika permintaan direject");
-            }
-        })    
-
-    })
-';
-
-$this->registerJs($js);
+$this->registerJsFile(Yii::getAlias("@js/cashier.js"),[
+    'depends' => [
+        '\app\assets\AppAsset'
+    ]
+]);

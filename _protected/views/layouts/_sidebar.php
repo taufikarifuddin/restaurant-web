@@ -1,19 +1,8 @@
-<?php
-
-?>
 
 <!-- Sidebar user panel -->
 <div class="user-panel">
     <div class="pull-left image">
-        <?php echo \cebe\gravatar\Gravatar::widget(
-            [
-                'email' => 'username@example.com',
-                'options' => [
-                    'alt' => 'username',
-                ],
-                'size' => 64,
-            ]
-        ); ?>
+        <img src="<?= Yii::getAlias("@resource/user-image.jpg") ?>" alt="username">
     </div>
     <div class="pull-left info">
         <p>username</p>

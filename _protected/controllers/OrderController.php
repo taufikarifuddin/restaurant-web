@@ -179,4 +179,44 @@ class OrderController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionGetOrderChef(){
+        $post = Yii::$app->request->post();
+        if( $post && Yii::$app->request->isAjax ){
+            $order = Order::findOne($post['order']);
+            
+            if( is_null($order) ) return "";
+
+            $str = '<tr id="container-'.$order->id.'">
+                <td> ORD-'.$order->id.' </td>    
+                <td> '.$order->user->username.' </td>    
+                <td> '.$order->table_number.' </td>    
+                <td>
+                    <table class="table">
+                        <tr>
+                            <td style="width:15%;"> Food Name </td>
+                            <td style="width:5%;"> Qty </td>                              
+                        </tr>';
+            foreach( $order->orderItems as $k => $val ){
+                $str .= "<tr>
+                    <td>".$val->food->name."</td>
+                    <td>".$val->qty."</td>                           
+                </tr>";
+            }
+
+            $str .='</table>
+                </td>                
+                <td>
+                    <button id="btn-approve-'.$order->id.'"  data-id="'.$order->id.'"  class="btn-approve btn btn-success btn-flat btn-xs round">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </td>
+            </tr>';
+
+            return $str;
+
+        }
+
+        return "";
+    }
 }

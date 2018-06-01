@@ -1,21 +1,23 @@
 <?php
+    use yii\helpers\Url;
+
     $this->title = "Koki";
 ?>
 
 <div class="table-responsive" style="max-height:500px;">
-    <table class="table no-margin">
+    <table class="table no-margin" >
         <thead>
             <tr>
                 <th>Order ID</th>
                 <th>User</th>
                 <th>Tabble</th>            
                 <th>Details</th>            
-                <th>Actions</th>                            
+                <th>Confirm Is Done</th>                            
             </tr>
         </thead>
-        <tbody>
+        <tbody id="chef-table-body">
             <?php foreach( $orders as $k => $v ): ?>
-            <tr>
+            <tr id="container-<?= $v->id ?>">
                 <td> ORD-<?= $v->id ?> </td>    
                 <td> <?= $v->user->username ?> </td>    
                 <td> <?= $v->table_number ?> </td>    
@@ -37,9 +39,9 @@
                     <button id="btn-approve-<?=$v->id?>"  data-id="<?=$v->id?>"  class="btn-approve btn btn-success btn-flat btn-xs round">
                         <i class="fa fa-check"></i>
                     </button>
-                    <button id="btn-reject-<?=$v->id?>" data-id="<?=$v->id?>"  class="btn-reject btn btn-danger btn-flat btn-xs">
+                    <!-- <button id="btn-reject-<?=$v->id?>" data-id="<?=$v->id?>"  class="btn-reject btn btn-danger btn-flat btn-xs">
                         <i class="fa fa-times"></i>                    
-                    </button>                    
+                    </button>                     -->
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -50,29 +52,8 @@
 
 <?php
 
-
-$js = '
-
-    function sendDataToServer(url,data,method,fn){
-        $.ajax({
-            url : url,
-            data : data,
-            method : method,
-            success : fn
-        });
-    }
-
-    $(function(){
-
-        $(document).on("click",".btn-approve",function(){
-            var id = $(this).data("id");
-        })
-    
-        $(document).on("click",".btn-reject",function(){
-            var id = $(this).data("id");              
-        })    
-
-    })
-';
-
-$this->registerJs($js);
+$this->registerJsFile(Yii::getAlias("@js/chef.js"),[
+    'depends' => [
+        '\app\assets\AppAsset'
+    ]
+]);

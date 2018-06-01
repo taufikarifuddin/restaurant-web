@@ -1,7 +1,34 @@
-const SUBMIT_ORDER = "submit-order";
-const SEND_BACK_TO_USER = "send-back-to-user";
+var baseUrl = $('meta[name="base-url"]').attr('content');    
+
+function sendDataToServer(id,fn){
+    $.ajax({
+        url : baseUrl+"/operation/done",
+        data : { id : id ,_csrf : $('meta[name="csrf-token"]').attr("content") },
+        method : "post",
+        success : fn
+    });
+}
+
+$(function(){
+
+    $(document).on("click",".btn-approve",function(){
+        var id = $(this).data("id");          
+        sendDataToServer(id,function(response){
+            if( response ) {
+                $("#container-"+id).remove();
+            } 
+        });  
+        
+    })
+
+    $(document).on("click",".btn-reject",function(){
+        var id = $(this).data("id");              
+    })    
+
+})
+
+//notification
 const SUBMIT_TO_CHEF = "submit-to-chef";
-const NOTIFY_PROGRESS ="notify-progress";
 
 function noty(message){
     new Noty({
@@ -27,28 +54,12 @@ $(function(){
     
     var server = $('meta[name="node-server"]').attr('content');
     var port = $('meta[name="node-port"]').attr('content');
-    var baseUrl = $('meta[name="base-url"]').attr('content');
-
     var socket = io(server + ':' +port);
-//    socket.emit(SUBMIT_ORDER,{ data : 'hehe'});
-    
-
-    socket.on(SUBMIT_ORDER, function(data) { 
-        noty("coba lagi gan");
-    });
-
-    socket.on(SEND_BACK_TO_USER, function(data) { 
-
-    });
     
     socket.on(SUBMIT_TO_CHEF, function(data) { 
         sendToServer(baseUrl+"/order/get-order-chef",data.orderId,function(response){            
             noty("NEW ORDER");
             $('#chef-table-body').append(response);
         })
-    });
-
-    socket.on(NOTIFY_PROGRESS,function(data){
-
     });
 })

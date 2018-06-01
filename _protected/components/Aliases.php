@@ -21,6 +21,8 @@ class Aliases extends Component
         Yii::setAlias('@uploads-request',Yii::getAlias('@web').'/uploads');
         Yii::setAlias('@themes', Yii::$app->view->theme->baseUrl);
         Yii::setAlias('@uploads', Yii::getAlias('@webroot').'/uploads/');
+        Yii::setAlias('@resource', Yii::getAlias('@web').'/resources');      
+        Yii::setAlias('@js', Yii::getAlias('@web').'/themes/pub/js');                
         Yii::setAlias('@tests', Yii::getAlias('@webroot').'/_protected/tests/');
     }
 }

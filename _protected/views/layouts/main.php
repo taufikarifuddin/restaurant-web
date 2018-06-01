@@ -20,6 +20,7 @@ AppAsset::register($this);
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='localhost' name='node-server'>
     <meta content='3000' name='node-port'>    
+    <meta content="<?=Yii::getAlias('@web')?>" name="base-url">
     <!-- Ionicons -->
     <!-- <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/> -->
     <!-- Theme style -->

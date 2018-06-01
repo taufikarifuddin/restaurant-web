@@ -44,9 +44,7 @@ class OrderItem extends \yii\db\ActiveRecord
             [['food_id', 'qty', 'order_id'], 'integer'],
             [['qty', 'order_id'], 'required'],
             [['note'], 'string'],
-            [['approved'], 'string', 'max' => 1],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+            [['approved'], 'boolean'],
         ];
     }
 
@@ -58,16 +56,6 @@ class OrderItem extends \yii\db\ActiveRecord
         return 'order_item';
     }
 
-    /**
-     *
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
 
     /**
      * @inheritdoc
