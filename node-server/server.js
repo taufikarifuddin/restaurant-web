@@ -13,8 +13,7 @@ io.on('connection', function(socket){
 
 
     socket.on(SUBMIT_ORDER, function(data) { 
-      console.log('called');
-      io.emit(SUBMIT_ORDER, "say hai");  
+      io.emit(SUBMIT_ORDER,data);
     });
 
     socket.on('broadcast',function(){
