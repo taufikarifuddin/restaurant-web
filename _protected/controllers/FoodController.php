@@ -187,4 +187,22 @@ class FoodController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionUpdateFood(){
+        if (Yii::$app->request->isAjax) {
+            $id = Yii::$app->request->post('id');
+            $food = Food::findOne($id);
+            if ( !is_null($food) ){
+                $food->status = $food->status == 0 ? 1 : 0; 
+                if( $food->save() ){
+                    return true;
+                }else{
+                    var_dump($food->errors);
+                }
+            }
+            return false;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

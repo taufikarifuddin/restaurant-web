@@ -19,7 +19,8 @@
         "mootensai/yii2-enhanced-gii": "dev-master",
         "kartik-v/yii2-tree-manager": "dev-master",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "wisembly/elephant.io": "^3.3"
+        "wisembly/elephant.io": "^3.3",
+        "kartik-v/yii2-widget-switchinput": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
@@ -31,7 +32,15 @@
     },
     "config": {
         "vendor-dir": "_protected/vendor",
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "config" : {
+            "fxp-asset" : {
+                "installer-paths" : {
+                    "npm-asset-library": "_protected/vendor/npm",
+                    "bower-asset-library": "_protected/vendor/bower"
+                }
+            }
+        }
     },
     "scripts": {
         "post-create-project-cmd": [
@@ -55,8 +64,7 @@
             ]
         },
         "asset-installer-paths": {
-            "npm-asset-library": "_protected/vendor/npm",
-            "bower-asset-library": "_protected/vendor/bower"
+            
         }
     }
 }

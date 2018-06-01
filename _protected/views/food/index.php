@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
+use kartik\widgets\SwitchInput;
 
 $this->title = 'Food';
 $this->params['breadcrumbs'][] = $this->title;
@@ -73,6 +74,49 @@ $this->registerJs($search);
                     'pluginOptions' => ['allowClear' => true],
                 ],
                 'filterInputOptions' => ['placeholder' => 'Status', 'id' => 'grid-food-search-status']
+            ],
+            [
+                'label' => 'Update Food ',
+                'format' => 'raw',
+                'value' => function($model){
+                    // Adjust handle width for longer labels
+                    return SwitchInput::widget([
+                        'value' => $model->status == 1 ? true : false,
+                        'name' => \yii\helpers\Html::getInputName($model,'status'),
+                        'options' => [ 
+                            'class' => 'toggle-status',
+                            'data-id' => $model->id,
+                            'id' => 'data-'.$model->id
+                        ],                       
+                        'pluginOptions'=>[
+                            'onText'=>'Ready',
+                            'offText'=>'Empty',
+                        ],
+                        'pluginEvents' => [
+                            "switchChange.bootstrapSwitch" => "function() { 
+                                var id = $(this).data('id');
+                                $.ajax({
+                                    url : '".\yii\helpers\Url::to(['food/update-food'])."',
+                                    data : { id : id },
+                                    type : 'post',
+                                    success : function(response){
+                                        if( response){
+                                            var elem = $('tr[data-key=\"'+id+'\"] td[data-col-seq=\"7\"]');
+
+                                            if( elem.text() == 'AVAILABLE' ) {
+                                                elem.text('NOT AVAILABLE');
+                                            }else{
+                                                elem.text('AVAILABLE');
+                                            }
+                                        }  
+                                        console.log(response);
+                                    }
+                                });
+                             }"
+                        ]
+                    ]);
+//                    return $model->status;
+                },
             ],
         [
             'class' => 'yii\grid\ActionColumn',

@@ -47,7 +47,7 @@ class Food extends \yii\db\ActiveRecord
             [['detail'], 'string'],
             [['price', 'category'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
+            [['status'], 'boolean'],
         ];
     }
 
