@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use \kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Food */
 /* @var $form yii\widgets\ActiveForm */

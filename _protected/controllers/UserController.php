@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use \app\models\UserTopup;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -148,6 +149,36 @@ class UserController extends Controller
         ]);
 
         return $pdf->render();
+    }
+
+    public function actionTopup(){
+
+        $listUser = \yii\helpers\ArrayHelper::map(User::find()
+            ->where(['role' => \app\models\Role::CUSTOMER])
+            ->all(),'id','username');
+
+        $userTopup = new UserTopup();
+
+        if( Yii::$app->request->post() && $userTopup->load(Yii::$app->request->post()) ){
+           
+            $user = User::findOne($userTopup->userId);
+            if( !is_null($user) ){
+                $user->current_saldo += $userTopup->saldo;
+                if( $user->save() ){
+                    Yii::$app->session->setFlash('success', "Success topup ".$userTopup->saldo." to ".$user->username);
+                    $this->redirect(\yii\helpers\Url::to(['user/view','id' => $user->id]));
+                }else{
+                    var_dump($user->errors);
+                    die();
+                    Yii::$app->session->setFlash('error', "Error, failed topup saldo to user. cause : ".$user->errors);
+                }
+            }
+        }
+
+        return $this->render('topup',[
+            'data' => $listUser,
+            'model' => $userTopup
+        ]);
     }
 
     

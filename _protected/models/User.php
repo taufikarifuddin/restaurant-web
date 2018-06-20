@@ -21,7 +21,7 @@ class User extends BaseUser
             [['status','current_saldo'], 'integer'],
             [['username', 'email', 'password_hash', 'password_reset_token', 'account_activation_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['role'], 'string', 'max' => 4],
+//            [['role'], 'string', 'max' => 4],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],

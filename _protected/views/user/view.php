@@ -13,6 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view col-md-12">
 <div class="row">
+    <?php if( Yii::$app->session->hasFlash('success') ){ ?>
+    <div class="alert alert-success alert-dismissable">
+      <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+    <?php }else if(Yii::$app->session->hasFlash('error')) { ?>
+        <div class="alert alert-error alert-dismissable">
+            <?= Yii::$app->session->getFlash('error') ?>
+        </div>    
+    <?php } ?>
     <div class="col-sm-9">                   
                 </div>
                 <div class="col-sm-3" style="margin-top: 15px">
@@ -80,16 +89,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'is_payed',
                     'step',
             ];
-            echo Gridview::widget([
-                'dataProvider' => $providerOrder,
-                'pjax' => true,
-                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-order']],
-                'panel' => [
-                    'type' => GridView::TYPE_PRIMARY,
-                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Order'),
-                ],
-                'columns' => $gridColumnOrder
-            ]);
+            // echo Gridview::widget([
+            //     'dataProvider' => $providerOrder,
+            //     'pjax' => true,
+            //     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-order']],
+            //     'panel' => [
+            //         'type' => GridView::TYPE_PRIMARY,
+            //         'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Order'),
+            //     ],
+            //     'columns' => $gridColumnOrder
+            // ]);
         }
         ?>
 
