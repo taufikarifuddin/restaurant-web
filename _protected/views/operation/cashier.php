@@ -15,7 +15,7 @@
                 <th style="width:10%;">Actions</th>                            
             </tr>
         </thead>
-        <tbody>
+        <tbody id="chasier-table-body">
             <?php foreach( $orders as $k => $v ): ?>
             <tr id="container-<?= $v->id ?>">
                 <td> ORD-<?= $v->id ?> </td>    

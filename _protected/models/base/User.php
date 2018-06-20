@@ -106,20 +106,7 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\Order::className(), ['user_id' => 'id']);
     }
-    
-    /**
-     * @inheritdoc
-     * @return array mixed
-     */
-    public function behaviors()
-    {
-        return [
-            'uuid' => [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
+   
 
 
     /**

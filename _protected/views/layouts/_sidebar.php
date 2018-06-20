@@ -43,15 +43,16 @@ $menuItems[] = [
     'label' => 'Master',
     'items' => $developerMenuItems,
 ];
-$menuItems[] = [
-    'url' => ['/operation/chef'],
-    'icon' => 'user',
-    'label' => 'Koki',
-];
+
 $menuItems[] = [
     'url' => ['/operation/cashier'],
     'icon' => 'money',
     'label' => 'Kasir',
+];
+$menuItems[] = [
+    'url' => ['/operation/chef'],
+    'icon' => 'user',
+    'label' => 'Koki',
 ];
 
 echo dmstr\widgets\Menu::widget([

@@ -7,7 +7,7 @@ $config = [
     'name' => 'BASIC',
     'language' => 'en',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'app\components\Aliases'],
+    'bootstrap' => ['log', 'app\components\Aliases','fileGetContentParser'],
 	'modules' => [
 		'gridview' => [
 			'class' => '\kartik\grid\Module',
@@ -22,6 +22,9 @@ $config = [
 		],
 	],	
     'components' => [	
+        'fileGetContentParser' => [
+            'class' => 'app\models\FileContentParser'
+        ],
         'formatter' => [
             'currencyCode' => 'IDR'
         ],	

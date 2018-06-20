@@ -2,6 +2,8 @@ var baseUrl = $('meta[name="base-url"]').attr('content');
 
 function checkIsApproved(parentId){
     var listOfCheckbox = $(".checkbox-"+parentId);
+    console.log(".checkbox-"+parentId);
+    console.log(listOfCheckbox);
     var isApproved = true;
     $.each(listOfCheckbox,function(index,elem){
         var isChecked = $(this).prop("checked");
@@ -15,6 +17,7 @@ function checkIsApproved(parentId){
 
 function setActionBtn(id,parentId){
     var isValid = checkIsApproved(parentId);
+    console.log(isValid);
     var button = getBtnDOM(parentId);
 
     button.approve.attr("disabled","true");
@@ -39,6 +42,7 @@ function getBtnDOM(parentId){
 function collectData(parentId){
     var listCheckbox = $("#table-"+parentId+" input[type=\"checkbox\"]");
     var value = [];
+    console.log(listCheckbox);
     $.each(listCheckbox,function(index,data){
         var id = $(this).data("id");
         var isApproved = $(this).prop("checked");
@@ -134,7 +138,9 @@ $(function(){
             alert("Note harus diisi ketika permintaan direject");
         }else{
             sendDataToServer(request,function(response){
-                console.log(response);                    
+                if( response ) {
+                    $("#container-"+id).remove();
+                }           
             });
         }
     })  
@@ -173,9 +179,11 @@ $(function(){
 
     var socket = io(server + ':' +port);
     
-
     socket.on(SUBMIT_ORDER, function(data) { 
-        noty("coba lagi gan");
+        sendToServer(baseUrl+"/order/get-order-cashier",data.orderId,function(response){            
+            noty("NEW ORDER");
+            $('#chasier-table-body').append(response);
+        })
     });
 
 })

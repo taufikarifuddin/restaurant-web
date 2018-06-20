@@ -180,6 +180,59 @@ class OrderController extends Controller
         }
     }
 
+    public function actionGetOrderCashier(){
+        $post = Yii::$app->request->post();
+        if( $post && Yii::$app->request->isAjax ){
+            $order = Order::findOne($post['order']);
+            
+            if( is_null($order) ) return "";
+
+            $str = '<tr id="container-'.$order->id.'">
+                <td> ORD-'.$order->id.' </td>    
+                <td> '.$order->user->username.' </td>    
+                <td> '.$order->table_number.' </td>    
+                <td>
+                    <table class="table" id="table-'.$order->id.'">
+                        <tr>
+                            <td style="width:15%;"> Food Name </td>
+                            <td style="width:5%;"> Qty </td>                              
+                        </tr>';
+            foreach( $order->orderItems as $k => $v ){
+                $str .= "<tr>
+                    <td>".$v->food->name."</td>
+                    <td>".$v->qty."</td>  
+                    <td> 
+                        <div class='form-group'>
+                            <input type='checkbox' checked='checked'  id='checkbox-".$v->id."' data-parent='".$order->id."'
+                            data-id='".$v->id."' class='checkbox-".$order->id." checkbox' id='item-".$v->id."' />
+                        </div>
+                        <div class='form-group'>                  
+                            <textarea class='textarea' id='textarea-".$v->id."' style='display:none;' 
+                                placeholder='Add Note' rows=4 cols=80 id='note-".$v->id."'></textarea>
+                        </div>
+                    </td>                        
+                </tr>";
+            }
+
+            $str .='</table>
+                </td>                
+                <td>
+                    <button id="btn-approve-'.$order->id.'"  data-id="'.$order->id.'"  class="btn-approve btn btn-success btn-flat btn-xs round">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button id="btn-reject-'.$order->id.'" data-id="'.$order->id.'" disabled class="btn-reject btn btn-danger btn-flat btn-xs">
+                        <i class="fa fa-times"></i>                    
+                    </button>    
+                </td>
+            </tr>';
+
+            return $str;
+
+        }
+
+        return "";
+    }
+
     public function actionGetOrderChef(){
         $post = Yii::$app->request->post();
         if( $post && Yii::$app->request->isAjax ){
@@ -192,7 +245,7 @@ class OrderController extends Controller
                 <td> '.$order->user->username.' </td>    
                 <td> '.$order->table_number.' </td>    
                 <td>
-                    <table class="table">
+                    <table class="table" >
                         <tr>
                             <td style="width:15%;"> Food Name </td>
                             <td style="width:5%;"> Qty </td>                              

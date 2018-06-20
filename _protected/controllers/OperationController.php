@@ -43,13 +43,6 @@ class OperationController extends Controller{
         ]);
     }
 
-    public function actionSubmitOrder(){
-        NotificationService::emit(EmiterModel::SUBMIT_ORDER,[
-            'message' => 'say hai'
-        ]);
-        return "success";
-    }
-
     public function actionConfirm(){
         $post = Yii::$app->request->post();
         if( $post && Yii::$app->request->isAjax ){

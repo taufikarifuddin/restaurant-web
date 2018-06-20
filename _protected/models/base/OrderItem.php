@@ -3,7 +3,6 @@
 namespace app\models\base;
 
 use Yii;
-use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "order_item".
@@ -95,10 +94,7 @@ class OrderItem extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'uuid' => [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
+           
         ];
     }
 
