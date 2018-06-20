@@ -93,11 +93,11 @@ class LoginForm extends Model
             return false;
         }
 
-        // if there is user but his status is inactive, write that in status property so we know for later
-        if ($user->status == User::STATUS_INACTIVE) {
-            $this->status = $user->status;
-            return false;
-        }
+        // // if there is user but his status is inactive, write that in status property so we know for later
+        // if ($user->status == User::STATUS_INACTIVE) {
+        //     $this->status = $user->status;
+        //     return false;
+        // }
  
         return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
     }
@@ -110,11 +110,11 @@ class LoginForm extends Model
      */
     private function findUser()
     {
-        if (!($this->scenario === 'lwe')) {
+//        if (!($this->scenario === 'lwe')) {
             return User::findByUsername($this->username);
-        }
+ //       }
 
-        return $this->_user = User::findByEmail($this->email);   
+//        return $this->_user = User::findByEmail($this->email);   
     }
 
     /**

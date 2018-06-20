@@ -20,10 +20,11 @@ $this->registerJs($search);
 <div class="food-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <?php if( \app\models\Role::adminRole(Yii::$app->user->identity->role) ): ?>
     <p>
         <?= Html::a('Create Food', ['create'], ['class' => 'btn btn-flat btn-sm btn-success']) ?>
     </p>
+    <?php endif; ?>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
@@ -120,6 +121,7 @@ $this->registerJs($search);
             ],
         [
             'class' => 'yii\grid\ActionColumn',
+            'template' => \app\models\Role::adminRole(Yii::$app->user->identity->role) ? "{update} {view} {delete}" : ""
         ],
     ]; 
     ?>

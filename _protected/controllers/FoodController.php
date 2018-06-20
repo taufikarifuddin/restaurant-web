@@ -66,7 +66,9 @@ class FoodController extends Controller
                 $obj = new FoodImage();
                 $obj->food_id = $modelForm->foodId;
                 $obj->img = $name;
-                $obj->save();
+                if($obj->save()){
+                    $this->redirect('');
+                }
             }
         }
 

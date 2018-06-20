@@ -1,11 +1,14 @@
+<?php
 
+use app\models\Role;
+?>
 <!-- Sidebar user panel -->
 <div class="user-panel">
     <div class="pull-left image">
         <img src="<?= Yii::getAlias("@resource/user-image.jpg") ?>" alt="username">
     </div>
     <div class="pull-left info">
-        <p>username</p>
+        <p><?= Yii::$app->user->identity->username ?></p>
 
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
     </div>
@@ -42,17 +45,35 @@ $menuItems[] = [
     'icon' => 'cog',
     'label' => 'Master',
     'items' => $developerMenuItems,
+    'visible' => Role::adminRole(Yii::$app->user->identity->role)
+];
+
+$menuItems[] = [
+    'url' => ['/food/index'],
+    'icon' => 'apple',
+    'label' => 'Food',
+    'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
+];
+
+
+$menuItems[] = [
+    'url' => ['/user/topup'],
+    'icon' => 'money',
+    'label' => 'Kasir',
+    'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
 ];
 
 $menuItems[] = [
     'url' => ['/operation/cashier'],
-    'icon' => 'money',
+    'icon' => 'cart-plus',
     'label' => 'Kasir',
+    'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
 ];
 $menuItems[] = [
     'url' => ['/operation/chef'],
-    'icon' => 'user',
+    'icon' => 'cart-plus',
     'label' => 'Koki',
+    'visible' => Role::chefRole(Yii::$app->user->identity->role)
 ];
 
 echo dmstr\widgets\Menu::widget([

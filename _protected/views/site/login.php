@@ -1,52 +1,89 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \app\models\LoginForm */
-
+use dmstr\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+/* @var $this \yii\web\View */
+/* @var $content string */
+use app\assets\AppAsset;
 $this->title = Yii::t('app', 'Login');
-$this->params['breadcrumbs'][] = $this->title;
+
+AppAsset::register($this);
+// dmstr\web\AdminLteAsset::register($this);
+
+$fieldOptions1 = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+];
+
+$fieldOptions2 = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
+];
 ?>
-<div class="site-login">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content='localhost' name='node-server'>
+    <meta content='3000' name='node-port'>    
+    <meta content="<?=Yii::getAlias('@web')?>" name="base-url">
+    <!-- Ionicons -->
+    <!-- <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/> -->
+    <!-- Theme style -->
+    <?php $this->head() ?>
 
-    <div class="col-md-5 well bs-component">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-        <p><?= Yii::t('app', 'Please fill out the following fields to login:') ?></p>
-
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-        <?php //-- use email or username field depending on model scenario --// ?>
-        <?php if ($model->scenario === 'lwe'): ?>
-
-            <?= $form->field($model, 'email')->input('email', 
-                ['placeholder' => Yii::t('app', 'Enter your e-mail'), 'autofocus' => true]) ?>
-
-        <?php else: ?>
-
-            <?= $form->field($model, 'username')->textInput(
-                ['placeholder' => Yii::t('app', 'Enter your username'), 'autofocus' => true]) ?>
-
-        <?php endif ?>
-
-        <?= $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('app', 'Enter your password')]) ?>
-
-        <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-        <div style="color:#999;margin:1em 0">
-            <?= Yii::t('app', 'If you forgot your password you can') ?>
-            <?= Html::a(Yii::t('app', 'reset it'), ['site/request-password-reset']) ?>.
+<body class="hold-transition login-page">
+<?php $this->beginBody() ?>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Admin</b>LTE</a>
         </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
 
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
+
+            <?= $form
+                ->field($model, 'username', $fieldOptions1)
+                ->label(false)
+                ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+
+            <?= $form
+                ->field($model, 'password', $fieldOptions2)
+                ->label(false)
+                ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                </div>
+                <!-- /.col -->
+            </div>
+            <?php ActiveForm::end(); ?>
+
         </div>
-
-        <?php ActiveForm::end(); ?>
-
-    </div>
-  
-</div>
+        <!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

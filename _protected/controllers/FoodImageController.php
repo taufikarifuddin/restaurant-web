@@ -28,9 +28,17 @@ class FoodImageController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $foodImage = $this->findModel($id);
+        $foodImage->deleteWithRelated();
 
-        return $this->redirect(['food/index']);
+        $imageFullPath = Yii::getAlias('@uploads/'.$foodImage->img);
+
+
+        if( file_exists($imageFullPath) ){
+            unlink($imageFullPath);
+        }
+
+        return $this->redirect(['food/view','id' => $foodImage->food_id]);
     }
     
     protected function findModel($id)

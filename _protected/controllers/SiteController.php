@@ -33,7 +33,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup','index'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -41,7 +41,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -154,16 +154,16 @@ class SiteController extends Controller
             $successfulLogin = false;
         }
 
-        // if user's account is not activated, he will have to activate it first
-        if ($model->status === User::STATUS_INACTIVE && $successfulLogin === false) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 
-                'You have to activate your account first. Please check your email.'));
-            return $this->refresh();
-        } 
+        // // if user's account is not activated, he will have to activate it first
+        // if ($model->status === User::STATUS_INACTIVE && $successfulLogin === false) {
+        //     Yii::$app->session->setFlash('error', Yii::t('app', 
+        //         'You have to activate your account first. Please check your email.'));
+        //     return $this->refresh();
+        // } 
 
         // if user is not denied because he is not active, then his credentials are not good
-        if ($successfulLogin === false) {
-            return $this->render('login', ['model' => $model]);
+        if ($successfulLogin === false) {            
+            return $this->renderPartial('login', ['model' => $model]);
         }
 
         // login was successful, let user go wherever he previously wanted

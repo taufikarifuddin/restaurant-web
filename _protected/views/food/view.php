@@ -67,8 +67,22 @@ $this->params['breadcrumbs'][] = $this->title;
 if($providerFoodImage->totalCount){
     $gridColumnFoodImage = [
         ['class' => 'yii\grid\SerialColumn'],
-            ['attribute' => 'id', 'visible' => false],
-                        'img',
+        ['attribute' => 'id', 'visible' => false],
+        [
+            'attribute' => 'img',
+            'value' => function($model){
+                return "<img width=100 src='".Yii::getAlias('@uploads-request/'.$model->img)."'>";
+            },
+            'format' => 'raw'
+        ],
+        [
+            'label' => 'Remove',
+            'value' => function($model){
+                return '<a class="btn btn-flat btn-sm btn-danger" href="'.\yii\helpers\Url::to(['food-image/delete','id' => $model->id]).'" data-confirm="Are you sure you want to delete this item?" data-method="post">Delete</a>';
+            },
+            'format' => 'raw'
+        ]
+
     ];
     echo Gridview::widget([
         'dataProvider' => $providerFoodImage,
@@ -78,7 +92,7 @@ if($providerFoodImage->totalCount){
             'type' => GridView::TYPE_PRIMARY,
             'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Food Image'),
         ],
-        'columns' => $gridColumnFoodImage
+        'columns' => $gridColumnFoodImage,
     ]);
 }
 ?>
@@ -115,16 +129,16 @@ if($providerOrderItem->totalCount){
                 'label' => 'Order'
             ],
     ];
-    echo Gridview::widget([
-        'dataProvider' => $providerOrderItem,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-order-item']],
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Order Item'),
-        ],
-        'columns' => $gridColumnOrderItem
-    ]);
+    // echo Gridview::widget([
+    //     'dataProvider' => $providerOrderItem,
+    //     'pjax' => true,
+    //     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-order-item']],
+    //     'panel' => [
+    //         'type' => GridView::TYPE_PRIMARY,
+    //         'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Order Item'),
+    //     ],
+    //     'columns' => $gridColumnOrderItem
+    // ]);
 }
 ?>
 

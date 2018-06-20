@@ -35,4 +35,16 @@ class Role{
         return $data[$id-1]['name'];
     }
 
+    public static function adminRole($roleId){
+        return self::ADMIN == $roleId;
+    }
+
+    public static function chefRole($roleId){
+        return self::KOKI == $roleId;
+    }
+
+    public static function cashierRole($roleId){
+        return self::KASIR == $roleId;
+    }
+
 }
