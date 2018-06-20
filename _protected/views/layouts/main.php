@@ -60,7 +60,13 @@ AppAsset::register($this);
                                 <i class="glyphicon glyphicon-user"></i>
                                 <span><?= Yii::$app->user->identity->username ?> <i class="caret"></i></span>
                             </a>
-                            <ul class="dropdown-menu" style="width:auto;">                               
+                            <ul class="dropdown-menu" style="width:auto;">   
+                            <li class="user-footer">                                  
+                                    <div class="pull-right col-md-12">
+                                        <a href="<?= \yii\helpers\Url::to(['/user/change-password']) ?>"
+                                           style="width:100%;" class="btn btn-info btn-flat" >Manage Password</a>
+                                    </div>
+                                </li>                            
                                 <li class="user-footer">                                  
                                     <div class="pull-right col-md-12">
                                         <a href="<?= \yii\helpers\Url::to(['/site/logout']) ?>"

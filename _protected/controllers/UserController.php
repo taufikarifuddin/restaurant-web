@@ -6,6 +6,7 @@ use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use \app\models\UserTopup;
+use \app\models\ChangePassword;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -149,6 +150,35 @@ class UserController extends Controller
         ]);
 
         return $pdf->render();
+    }
+
+    public function actionChangePassword(){
+
+        $model = new ChangePassword();
+
+        if( Yii::$app->request->post() && $model->load(Yii::$app->request->post()) ){
+            $userId = Yii::$app->user->identity->id;
+            $user = User::findOne($userId);
+            if( $user->validatePassword($model->oldPassword)){
+                if( !$user->validatePassword($model->password)){
+                    $user->setPassword($model->password);
+                    if( $user->save() ){
+                        Yii::$app->session->setFlash('success', "Password Changed");
+                        return $this->redirect(\yii\helpers\Url::to(['site/index']));
+                    }else{
+                        Yii::$app->session->setFlash('error', "Error when change password");
+                    }
+                }else{
+                    Yii::$app->session->setFlash('error', "try to input different password than before");
+                }
+            }else{
+                Yii::$app->session->setFlash('error', "your old password is invalid");
+            }
+        }
+
+        return $this->render('change-password',[
+            'model' => $model
+        ]);
     }
 
     public function actionTopup(){

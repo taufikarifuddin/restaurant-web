@@ -59,7 +59,7 @@ $menuItems[] = [
 $menuItems[] = [
     'url' => ['/user/topup'],
     'icon' => 'money',
-    'label' => 'Kasir',
+    'label' => 'Topup Saldo',
     'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
 ];
 
