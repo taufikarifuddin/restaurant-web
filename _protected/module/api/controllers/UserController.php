@@ -10,7 +10,33 @@ use app\models\User;
 class UserController extends ActiveController
 {
     public $modelClass = 'app\models\User';
+    public $enableCsrfValidation = false;
 
+    public function behaviors(){
+
+        $behaviors = parent::behaviors();
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
+            'cors' => [
+                'Access-Control-Allow-Origin' => ['*'],
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST'],
+                'Access-Control-Request-Headers' => ['*'],
+            ],
+        ];
+
+        $behaviors['authenticator'] = [
+            'except' => ['options'],
+        ];
+
+        if( isset($behaviors['authenticator']) )
+            unset($behaviors['authenticator']);
+        
+        
+        return $behaviors;
+
+    }
 
     public function actionLogin(){
         $post = Yii::$app->request->post();    
@@ -25,7 +51,8 @@ class UserController extends ActiveController
                         $user->password_hash = null;
                         return ResponseHelper::generateSuccessResponse([
                             'status' => true,
-                            'message' => 'Login Berhasil'
+                            'message' => 'Login Berhasil',
+                            'user' => $user
                         ]);                                
                     }
                 }

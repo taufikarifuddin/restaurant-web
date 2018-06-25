@@ -18,7 +18,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <meta content='localhost' name='node-server'>
+    <meta content='104.223.99.133' name='node-server'>
     <meta content='3000' name='node-port'>    
     <meta content="<?=Yii::getAlias('@web')?>" name="base-url">
     <!-- Ionicons -->

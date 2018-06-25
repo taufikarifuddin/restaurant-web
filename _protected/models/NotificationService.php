@@ -9,7 +9,7 @@ class NotificationService{
 
     private $server;
 
-    const DEFAULT_SERVER = "localhost";
+    const DEFAULT_SERVER = "104.223.99.133";
     const DEFAULT_PORT = "3000";
     
     public static function emit($emitName,$data,$server = self::DEFAULT_SERVER ,$port = self::DEFAULT_PORT){
