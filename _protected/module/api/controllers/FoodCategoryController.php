@@ -24,7 +24,8 @@ class FoodCategoryController extends ActiveController
                     'price' => $val['price'],
                     'status' => $val['status'],
                     'fotoPath' => '123',
-                    'qty' => 0
+                    'qty' => 0,
+                    'id' => $val['id']
                 ];
             }
 
