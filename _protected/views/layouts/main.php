@@ -1,7 +1,7 @@
 <?php
 use dmstr\widgets\Alert;
 use yii\helpers\Html;
-
+use app\models\NotificationService;
 /* @var $this \yii\web\View */
 /* @var $content string */
 use app\assets\AppAsset;
@@ -18,8 +18,8 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <meta content='104.223.99.133' name='node-server'>
-    <meta content='3000' name='node-port'>    
+    <meta content='<?=NotificationService::DEFAULT_SERVER?>' name='node-server'>
+    <meta content='<?=NotificationService::DEFAULT_PORT?>' name='node-port'>    
     <meta content="<?=Yii::getAlias('@web')?>" name="base-url">
     <!-- Ionicons -->
     <!-- <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/> -->

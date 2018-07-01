@@ -24,7 +24,6 @@ class OrderController extends ActiveController
             ->asArray()
             ->where(['user_id' => $userId])->all();
 
-        
 
         return ResponseHelper::generateSuccessResponse([
             'orders' => $data
@@ -48,8 +47,35 @@ class OrderController extends ActiveController
         ]);
     }
 
-    private function getTemplateOrder($order){
+    public function actionGetAllOrder($user = -1){
 
+        $data = ORder::find()
+            ->where(['user_id' => $user])
+            ->all();
+
+        $response = [];
+        foreach( $data as $k => $v ){
+
+            $items = [];
+
+            foreach($v->orderItems as $k => $val){
+                $items[] = [
+                    'name' => $val->food->name,
+                    'qty' => $val->qty,
+                    'price' => $val->qty * $val->food->price
+                ];        
+            }
+
+            $response[] = [
+                'id' => $v->id,
+                'date' => $v->order_time,
+                'total' => $v->total_price,
+                'items' => $items
+            ];
+        }
+
+
+        return $response;
     }
 
     public function actionDoOrder(){
