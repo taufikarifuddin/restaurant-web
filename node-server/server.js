@@ -21,7 +21,7 @@ io.on('connection', function(socket){
     })
     
     socket.on(SEND_BACK_TO_USER, function(data) { 
-
+      io.emit(SUBMIT_TO_CHEF,data);
     });
     
     socket.on(SUBMIT_TO_CHEF, function(data) { 
@@ -29,7 +29,7 @@ io.on('connection', function(socket){
     });
 
     socket.on(NOTIFY_PROGRESS,function(data){
-
+      io.emit(NOTIFY_PROGRESS,data);
     });
 
 });

@@ -75,6 +75,12 @@ class OperationController extends Controller{
                 'orderId' => $order->id
             ]);  
 
+            NotificationService::emit(EmiterModel::NOTIFY_PROGRESS,[
+                'orderId' => $order->id,
+                'status' => \app\models\OrderStep::DOING_BY_KOKI,
+                'date' => $order->order_time
+            ]);  
+
             return true;
         }
 
@@ -90,7 +96,15 @@ class OperationController extends Controller{
                 return false;
             }
             $order->step = OrderStep::SUCCESS;
+            
             if ( $order->save() ){
+
+                NotificationService::emit(EmiterModel::NOTIFY_PROGRESS,[
+                    'orderId' => $order->id,
+                    'status' => \app\models\OrderStep::SUCCESS,
+                    'date' => $order->order_time
+                ]);  
+    
                 return true;
             }
         }
