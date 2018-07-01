@@ -78,7 +78,16 @@ class OperationController extends Controller{
 
             if( count($rejectedItem) == 0 ){
                 $order->step = OrderStep::DOING_BY_KOKI;
+
+                $user = \app\models\User::findOne($order->user_id);
+                $user->current_saldo = $user->current_saldo - $order->total_price;
+                
+                if( is_null($user) ){
+                    return false;
+                }
+
                 if( !$order->save() ){
+                    $user->save();
                     var_dump($order->errors);
                     return false;
                 }
@@ -90,19 +99,21 @@ class OperationController extends Controller{
                 NotificationService::emit(EmiterModel::NOTIFY_PROGRESS,[
                     'orderId' => $order->id,
                     'status' => \app\models\OrderStep::DOING_BY_KOKI,
-                    'date' => $order->order_time
+                    'date' => $order->order_time,
+                    'userId' => $order->user_id,
+                    'saldo' =>  $user->current_saldo
                 ]);  
+
+                
                 return true;
             }else{
 
-                $orderObj = Order::findOne($post['order']);
-                if( !is_null($orderObj) ){
-                    $orderObj->delete();
-                }
+                $order->delete();
                 
                 NotificationService::emit(EmiterModel::SEND_BACK_TO_USER,[
                     'reject' => $rejectedItem,
-                    'orderItem' => $dataTemp
+                    'orderItem' => $dataTemp,
+                    'userId' => $order->user_id
                 ]);  
                 return true;
             }
@@ -126,7 +137,8 @@ class OperationController extends Controller{
                 NotificationService::emit(EmiterModel::NOTIFY_PROGRESS,[
                     'orderId' => $order->id,
                     'status' => \app\models\OrderStep::SUCCESS,
-                    'date' => $order->order_time
+                    'date' => $order->order_time,
+                    'userId' => $order->user_id
                 ]);  
     
                 return true;
