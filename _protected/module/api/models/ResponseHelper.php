@@ -31,8 +31,8 @@ class ResponseHelper{
         return self::getResponse(self::NOT_FOUND,"Data not found");
     }
 
-    public static function generateBadRequestResponse(){
-        return self::getResponse(self::BAD_REQUEST,"Data not valid");
+    public static function generateBadRequestResponse($data){
+        return self::getResponse(self::BAD_REQUEST,is_null($data) ? "Data not valid" : $data);
     }
 
     public static function generateInvalidMethodResponse(){

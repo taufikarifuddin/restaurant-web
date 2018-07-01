@@ -38,6 +38,22 @@ class UserController extends ActiveController
 
     }
 
+    public function actionRegister(){
+        $model = new \app\models\User();        
+        $post = Yii::$app->request->post();
+        if( $post ){
+            $model->username = $post['username'];
+            $model->email = $post['email'];
+            $model->password_hash = Yii::$app->getSecurity()->generatePasswordHash($post['password']);
+            if ( $model->save() ){
+                return ResponseHelper::generateSuccessResponse("Register Success !!");
+            }else{
+                return ResponseHelper::generateBadRequestResponse($model->errors); 
+            }
+        }
+        return ResponseHelper::generateInvalidMethodResponse();
+    }
+
     public function actionLogin(){
         $post = Yii::$app->request->post();    
         if( $post ){
