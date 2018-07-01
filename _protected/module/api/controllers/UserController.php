@@ -68,7 +68,8 @@ class UserController extends ActiveController
                         return ResponseHelper::generateSuccessResponse([
                             'status' => true,
                             'message' => 'Login Berhasil',
-                            'user' => $user
+                            'user' => $user,
+                            'isAdmin' => $user->role == \app\models\Role::ADMIN
                         ]);                                
                     }
                 }
