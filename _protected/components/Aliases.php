@@ -18,7 +18,7 @@ class Aliases extends Component
 {
     public function init() 
     {
-        Yii::setAlias('@uploads-request',Yii::getAlias('@web').'/uploads');
+        Yii::setAlias('@uploads-request',\yii\helpers\Url::base(true).'/uploads');
         Yii::setAlias('@themes', Yii::$app->view->theme->baseUrl);
         Yii::setAlias('@uploads', Yii::getAlias('@webroot').'/uploads/');
         Yii::setAlias('@resource', Yii::getAlias('@web').'/resources');      
