@@ -28,9 +28,15 @@ class OperationController extends Controller{
         ]);
     }
 
-    public function actionTable(){
+    public function actionTable($action = null){
 
-        $tables = \app\models\SeatTable::find()
+        $tables = \app\models\SeatTable::find();
+
+        if( !is_null($action) && $action == 'free' ){
+            $tables = $tables->where(['user_id' => NULL]);
+        }
+
+        $tables = $tables
             ->orderBy('seat_table_number')
             ->all();
 
