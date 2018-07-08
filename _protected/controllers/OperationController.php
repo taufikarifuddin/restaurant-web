@@ -28,6 +28,17 @@ class OperationController extends Controller{
         ]);
     }
 
+    public function actionTable(){
+
+        $tables = \app\models\SeatTable::find()
+            ->orderBy('seat_table_number')
+            ->all();
+
+        return $this->render('table',[
+            'tables' => $tables
+        ]);
+    }
+
     public function actionCashier(){
         $order = Order::find()->where(['step' => OrderStep::REVIEW_KASIR]);
 
