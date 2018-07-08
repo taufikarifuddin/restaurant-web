@@ -15,14 +15,14 @@ use yii\helpers\Url;
             <th>Table Number</th>
             <th>Occupied By</th>
         </tr>
-        <tr >
-            <?php foreach( $tables as $k => $v):?>
+        <?php foreach( $tables as $k => $v):?>
+        <tr>
             <td>Table-<?=$v->seat_table_number?></td>
             <td>
-                <?= is_null($v->user_id) ? "<label class='label label-warning'>Occupied By : ".$v->user->username."</label>" : 
+                <?= !is_null($v->user_id) ? "<label class='label label-warning'>Occupied By : ".$v->user->username."</label>" : 
                     "<label class='label label-success'>FREE</label>"?>
             </td>
-            <?php endforeach; ?>
         </tr>
+        <?php endforeach; ?>
     </table>
 </div>

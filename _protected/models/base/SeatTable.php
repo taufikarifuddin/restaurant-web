@@ -35,7 +35,7 @@ class SeatTable extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'seat_table_number'], 'required'],
+            [['seat_table_number'], 'required'],
             [['id', 'seat_table_number', 'user_id'], 'integer'],
             [['seat_table_number'], 'unique']
         ];
