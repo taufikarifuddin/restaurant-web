@@ -103,6 +103,10 @@ class OperationController extends Controller{
                     return false;
                 }
 
+                if( !$user->save() ){
+                    return false;
+                }
+
                 if( !$order->save() ){
                     $user->save();
                     var_dump($order->errors);
