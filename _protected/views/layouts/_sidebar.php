@@ -64,6 +64,13 @@ $menuItems[] = [
 ];
 
 $menuItems[] = [
+    'url' => ['/operation/table'],
+    'icon' => 'cutlery',
+    'label' => 'Seat Table',
+    'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
+];
+
+$menuItems[] = [
     'url' => ['/operation/cashier'],
     'icon' => 'cart-plus',
     'label' => 'Kasir',
