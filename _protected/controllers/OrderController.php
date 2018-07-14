@@ -219,7 +219,14 @@ class OrderController extends Controller
                 <td>
                     <button id="btn-approve-'.$order->id.'"  data-id="'.$order->id.'"  class="btn-approve btn btn-success btn-flat btn-xs round">
                         <i class="fa fa-check"></i>
-                    </button>
+                    </button>';
+            if( !$order->is_payed ){
+                $str .= '
+                    <button id="btn-pay-'.$order->id.'"  data-id="'.$order->id.'"  class="btn-pay btn btn-warning btn-flat btn-xs round">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </button>';
+            }
+            $str .='                    
                     <button id="btn-reject-'.$order->id.'" data-id="'.$order->id.'" disabled class="btn-reject btn btn-danger btn-flat btn-xs">
                         <i class="fa fa-times"></i>                    
                     </button>    

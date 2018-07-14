@@ -85,6 +85,7 @@ class OrderController extends ActiveController
             $order->user_id = $post['order_user_id'];
             $order->total_price = $post['order_total_price'];
             $order->table_number = $post['order_table_number'];
+            $order->is_payed = $post['is_use_saldo'];
             if( $order->save() ){
                 $orderItem = $post['order_item'];
                 foreach( $orderItem as $k => $v ){

@@ -144,6 +144,20 @@ $(function(){
             });
         }
     })  
+
+    $(document).on("click",".btn-pay",function(){
+        var id = $(this).data("id");    
+        $.ajax({
+            url : baseUrl+"/operation/notify-pay",
+            data : {order : id},
+            method : "post",
+            success : function(response){
+                if( response ){
+                    alert('Send Notification to User');
+                }
+            }
+        });       
+    })  
     
 
 })

@@ -51,6 +51,11 @@
                     <button id="btn-approve-<?=$v->id?>"  data-id="<?=$v->id?>" class="btn-approve btn btn-success btn-flat btn-xs round">
                         <i class="fa fa-check"></i>
                     </button>
+                    <?php if( !$v->is_payed ){ ?>
+                    <button id="btn-pay-<?=$v->id?>" data-id="<?=$v->id?>" class="btn-pay btn btn-warning btn-flat btn-xs">
+                        <i class="fa fa-exclamation-triangle"></i>                    
+                    </button>                 
+                    <?php } ?>   
                     <button id="btn-reject-<?=$v->id?>" data-id="<?=$v->id?>" disabled class="btn-reject btn btn-danger btn-flat btn-xs">
                         <i class="fa fa-times"></i>                    
                     </button>                    

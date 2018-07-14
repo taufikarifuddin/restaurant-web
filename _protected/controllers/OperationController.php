@@ -60,6 +60,23 @@ class OperationController extends Controller{
         ]);
     }
 
+    public function actionNotifyPay(){
+        $post = Yii::$app->request->post();
+        if( $post && isset($post['order']) ){
+            $order = Order::findOne($post['order']);
+            if( !is_null($order) ){
+                NotificationService::emit(EmiterModel::NOTIFY_PAY,[
+                    'order' => $post['order'],
+                    'userId' => $order->user_id,
+                    'date' => $order->order_time
+                ]); 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function actionConfirm(){
         $post = Yii::$app->request->post();
         $rejectedItem = [];        
@@ -93,23 +110,25 @@ class OperationController extends Controller{
                 return false;
             }
 
-            if( count($rejectedItem) == 0 ){
+            if( count($rejectedItem) == 0 ){                
                 $order->step = OrderStep::DOING_BY_KOKI;
 
                 $user = \app\models\User::findOne($order->user_id);
-                $user->current_saldo = $user->current_saldo - $order->total_price;
-                
-                if( is_null($user) ){
-                    return false;
-                }
+                if( $order->is_payed ){
+                    $user->current_saldo = $user->current_saldo - $order->total_price;
+                    
+                    if( is_null($user) ){
+                        return false;
+                    }
 
-                if( !$user->save() ){
-                    return false;
+                    if( !$user->save() ){
+                        return false;
+                    }
+                }else{
+                    $order->is_payed = true;
                 }
 
                 if( !$order->save() ){
-                    $user->save();
-                    var_dump($order->errors);
                     return false;
                 }
 
@@ -139,7 +158,6 @@ class OperationController extends Controller{
                 return true;
             }
         }
-
 
         return false;
     }

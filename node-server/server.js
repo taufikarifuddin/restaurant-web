@@ -7,6 +7,7 @@ const SUBMIT_ORDER = "submit-order";
 const SEND_BACK_TO_USER = "send-back-to-user";
 const SUBMIT_TO_CHEF = "submit-to-chef";
 const NOTIFY_PROGRESS ="notify-progress";
+const NOTIFY_PAY ="notify-pay";
 var count = 0;
 
 io.on('connection', function(socket){
@@ -30,6 +31,10 @@ io.on('connection', function(socket){
 
     socket.on(NOTIFY_PROGRESS,function(data){
       io.emit(NOTIFY_PROGRESS,data);
+    });
+
+    socket.on(NOTIFY_PAY,function(data){
+      io.emit(NOTIFY_PAY,data);
     });
 
 });
