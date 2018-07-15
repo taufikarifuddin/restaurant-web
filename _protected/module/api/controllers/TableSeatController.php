@@ -19,14 +19,9 @@ class TableSeatController extends ActiveController{
             if( is_null($tableSeat) ){
                 $tableSeat = new SeatTable();
                 $tableSeat->seat_table_number = $post;
-                if( $tableSeat->save() ){
-                    return ResponseHelper::generateSuccessResponse('success');
-                }else{
-                    return ResponseHelper::generateErrorResponse('success');
-                }
-            }else{
-                return ResponseHelper::generateBadRequestResponse('Table with number '.$post.' has been setted');
+                $tableSeat->save();
             }
+            return ResponseHelper::generateSuccessResponse('success');
         }   
         return ResponseHelper::generateBadRequestResponse('Bad Request');
     }
