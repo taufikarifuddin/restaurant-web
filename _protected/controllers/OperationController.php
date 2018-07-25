@@ -115,7 +115,7 @@ class OperationController extends Controller{
 
                 $user = \app\models\User::findOne($order->user_id);
                 if( $order->is_payed ){
-                    $user->current_saldo = $user->current_saldo - $order->total_price;
+                    $user->current_saldo = $user->current_saldo - ($order->total_price - ($order->total_price * 5 / 100));
                     
                     if( is_null($user) ){
                         return false;

@@ -40,6 +40,11 @@ $developerMenuItems[] = [
     'icon' => 'apple',
     'label' => 'Food',
 ];
+$developerMenuItems[] = [
+    'url' => ['/seat-table/index'],
+    'icon' => 'table',
+    'label' => 'Seat Table',
+];
 $menuItems[] = [
     #'url' => '#',
     'icon' => 'cog',

@@ -16,12 +16,12 @@ class TableSeatController extends ActiveController{
         $post = Yii::$app->request->post('seat');
         if( $post ){
             $tableSeat = SeatTable::findOne(['seat_table_number' => $post]);
-            if( is_null($tableSeat) ){
-                $tableSeat = new SeatTable();
-                $tableSeat->seat_table_number = $post;
-                $tableSeat->save();
+            if( !is_null($tableSeat) ){
+                // $tableSeat = new SeatTable();
+                // $tableSeat->seat_table_number = $post;
+                // $tableSeat->save();
+                return ResponseHelper::generateSuccessResponse('success');
             }
-            return ResponseHelper::generateSuccessResponse('success');
         }   
         return ResponseHelper::generateBadRequestResponse('Bad Request');
     }
@@ -30,7 +30,7 @@ class TableSeatController extends ActiveController{
         $post = Yii::$app->request->post();
         if( $post['user'] && $post['seat'] ){
             $tableSeat = SeatTable::findOne(['seat_table_number' => $post]);
-            if( !is_null($tableSeat) ){
+            if( !is_null($tableSeat) && isValid ){
                 $tableSeat->user_id = $post['user'];
                 if( $tableSeat->save() ){
                     return ResponseHelper::generateSuccessResponse('success');
@@ -38,6 +38,13 @@ class TableSeatController extends ActiveController{
             }
         }
         return ResponseHelper::generateBadRequestResponse('Bad Request');
+    }
+
+    private function isValid($user,$tableSeat){
+        if( $tableSeat->user_id == $user ){
+            return true;
+        }
+        return false;
     }
 
     public function actionLogout(){
