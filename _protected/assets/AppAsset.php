@@ -26,12 +26,13 @@ class AppAsset extends AssetBundle
         'css/noty.css',
         'css/themes/mint.css',
         'css/style.css',
+        'css/bootstrap-datetimepicker.min.css'
     ];
 
     public $js = [
         'js/noty.min.js',
-//        'js/user.js',
-        'js/socket.io.js'
+        'js/socket.io.js',
+        'js/bootstrap-datetimepicker.min.js'
     ];
 
     public $depends = [

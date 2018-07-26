@@ -11,6 +11,7 @@ class ResponseHelper{
     const BAD_REQUEST = 400;
     const METHOD_NOT_ALLOWED = 405;    
     const SUCCESS = 200;
+    const FORBIDDEN = 403;
 
     private static function getResponse($code,$data){
         return [
@@ -37,6 +38,11 @@ class ResponseHelper{
 
     public static function generateInvalidMethodResponse(){
         return self::getResponse(self::METHOD_NOT_ALLOWED,"Method not allowed");
+    }
+
+    
+    public static function generateForbiddenAccess(){
+        return self::getResponse(self::FORBIDDEN,"FORBIDDEN ACCESS");
     }
     
     

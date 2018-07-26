@@ -18,7 +18,7 @@ class Booking extends BaseBooking
         return array_replace_recursive(parent::rules(),
 	    [
             [['no_meja', 'user_id', 'starttime', 'endtime'], 'required'],
-            [['no_meja', 'user_id', 'starttime', 'endtime'], 'integer'],
+            [['no_meja', 'user_id'], 'integer'],
             [['is_available'], 'string', 'max' => 1]
         ]);
     }

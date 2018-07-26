@@ -78,4 +78,45 @@ class SeatTable extends \yii\db\ActiveRecord
     {
         return new \app\models\SeatTableQuery(get_called_class());
     }
+
+    public function getBookings()
+    {
+        return $this->hasMany(\app\models\Booking::className(), ['no_meja' => 'id']);
+    } 
+
+    public function getBookingsByDate($date = null,$idMeja = null,$isCanLogin = false){
+
+        if( !$isCanLogin ){
+            $dateNow = strtotime($date);
+            $dateTomorrow = strtotime('+1 day', $dateNow);
+            $result =  \app\models\Booking::find()
+                ->where(['between','starttime',$dateNow,$dateTomorrow])
+                ->andWhere(['no_meja' => $this->id])
+                ->orderby('starttime')
+                ->all();            
+
+            return $result;
+        }else{
+            $time = time();
+            $dateNow = strtotime(date('Y-m-d'));
+            $dateTomorrow = strtotime('+1 day', $dateNow);
+            $result =  \app\models\Booking::find()
+                ->where(['between','starttime',$dateNow,$dateTomorrow])
+                ->andWhere(['no_meja' => $idMeja])
+                ->orderby('starttime')
+                ->asArray()
+                ->all();
+            foreach ($result as $key => $value) {
+                $max = $value['starttime'] + 900;
+                $min = $value['starttime'] - 1800;
+                if( $time >= $min && $time <= $max){
+                    return $value;
+                }
+            }
+
+            return null;
+            
+        }
+
+    }
 }

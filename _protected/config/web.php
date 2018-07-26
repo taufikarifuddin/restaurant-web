@@ -5,6 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'name' => 'BASIC',
+    'timezone' => 'Asia/Jakarta',
     'language' => 'en',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'app\components\Aliases','fileGetContentParser'],

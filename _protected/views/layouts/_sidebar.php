@@ -75,12 +75,22 @@ $menuItems[] = [
     'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
 ];
 
+
+$menuItems[] = [
+    'url' => ['/booking/index'],
+    'icon' => 'key',
+    'label' => 'Booking',
+    'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
+];
+
 $menuItems[] = [
     'url' => ['/operation/cashier'],
     'icon' => 'cart-plus',
     'label' => 'Kasir',
     'visible' => Role::cashierRole(Yii::$app->user->identity->role) 
 ];
+
+
 $menuItems[] = [
     'url' => ['/operation/chef'],
     'icon' => 'cart-plus',

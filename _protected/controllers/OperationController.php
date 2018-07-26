@@ -28,7 +28,11 @@ class OperationController extends Controller{
         ]);
     }
 
-    public function actionTable($action = null){
+    public function actionTable($date = null,$action=null){
+
+        if( is_null($date) ){
+            $date = date('Y-m-d');
+        }
 
         $tables = \app\models\SeatTable::find();
 
@@ -41,7 +45,8 @@ class OperationController extends Controller{
             ->all();
 
         return $this->render('table',[
-            'tables' => $tables
+            'tables' => $tables,
+            'date' => $date
         ]);
     }
 

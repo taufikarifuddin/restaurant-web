@@ -17,10 +17,8 @@ $this->registerJs($search);
 ?>
 <div class="booking-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Booking', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Booking', ['create'], ['class' => 'btn btn-flat btn-sm btn-success']) ?>
     </p>
 <?php 
     $gridColumn = [
@@ -52,9 +50,18 @@ $this->registerJs($search);
                 ],
                 'filterInputOptions' => ['placeholder' => 'User', 'id' => 'grid--user_id']
             ],
-        'starttime',
-        'endtime',
-        'is_available',
+            [
+                'label' => 'Start Booking',
+                'value' => function($value){
+                    return date('d - M - Y  / H:i',$value->starttime);
+                }
+            ],
+            [
+                'label' => 'End Booking',
+                'value' => function($value){
+                    return date('d - M - Y  / H:i',$value->endtime);
+                }
+            ],
         [
             'class' => 'yii\grid\ActionColumn',
         ],
@@ -62,6 +69,7 @@ $this->registerJs($search);
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => $gridColumn,
         'pjax' => true,
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-booking']],
@@ -69,26 +77,8 @@ $this->registerJs($search);
             'type' => GridView::TYPE_PRIMARY,
             'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
         ],
-        'export' => false,
-        // your toolbar can include the additional full export menu
         'toolbar' => [
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
-                ],
-                'exportConfig' => [
-                    ExportMenu::FORMAT_PDF => false
-                ]
-            ]) ,
+            
         ],
     ]); ?>
 

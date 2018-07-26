@@ -41,7 +41,7 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             [['no_meja', 'user_id', 'starttime', 'endtime'], 'required'],
-            [['no_meja', 'user_id', 'starttime', 'endtime'], 'integer'],
+            [['no_meja', 'user_id'], 'integer'],
             [['is_available'], 'string', 'max' => 1]
         ];
     }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Booking;
+use app\models\BookingSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -32,12 +33,12 @@ class BookingController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Booking::find(),
-        ]);
+        $searchModel = new BookingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider, 
         ]);
     }
 
@@ -59,12 +60,16 @@ class BookingController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate( )
     {
         $model = new Booking();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadAll(Yii::$app->request->post()) ) {
+            $model->starttime = strtotime($model->starttime);
+            $model->endtime = strtotime($model->endtime);
+            if( $model->saveAll() ){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
